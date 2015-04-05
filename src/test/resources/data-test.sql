@@ -1,0 +1,7 @@
+INSERT INTO VISITEDURL values (12345,23456);
+
+INSERT INTO VISITEDURL values (-12345,1);
+
+INSERT INTO ROBOTSTXT_DISALLOWED values ('www.greatbong.net','/admin.html');
+
+INSERT INTO DOMAIN_LASTVISITED values ('www.greatbong.net',CURRENT_DATE );
