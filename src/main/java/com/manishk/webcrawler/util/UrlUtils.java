@@ -26,7 +26,7 @@ public class UrlUtils {
         Preconditions.checkNotNull(url);
         CrawlerMessage message = null;
         try {
-            URL url1 = new URL(url);
+            URL url1 = new URL(getURLWithProtocol(url));
             message = new CrawlerMessage(url1.getHost(),url1.getPath(),crawllevel==null?1:crawllevel+1);
         } catch (MalformedURLException e) {
             log.error("Error parsing "+url,e);
