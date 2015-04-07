@@ -13,3 +13,5 @@ The implementation given here is different from architecture in terms of
 1. In-process LinkedBlockingQueue has been used as message transfer mechanism between components
 2. Persistence is provided by in-memory instance of HSQLDB
 3. Mock implementation of indexer and Page caching components
+
+![](https://github.com/manishonline/web-crawler/blob/master/src/docs/WebCrawler_Component_Architecture.pdf)
