@@ -91,7 +91,7 @@ public class Crawler {
         log.info("Reading seed url list..");
 
         for(String seed : seedUrls){
-            CrawlerMessage message = UrlUtils.convertURLtoCrawlMessage(seed,null);
+            CrawlerMessage message = UrlUtils.convertURLtoCrawlMessage(UrlUtils.getURLWithProtocol(seed),null);
             if(message!=null)
                 queueService.addToQueue(message);
         }

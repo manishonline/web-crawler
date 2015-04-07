@@ -1,6 +1,7 @@
 package com.manishk.webcrawler.policy.robotstxt;
 
 import com.google.common.base.Preconditions;
+import com.manishk.webcrawler.util.UrlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,10 @@ public class RobotsTxtFileReader {
         URL robotURL = null;
         List<String> disallowed = new ArrayList<String>();
         try {
-            robotURL = new URL(domain+ROBOTS_TXT);
+            robotURL = new URL(UrlUtils.getURLWithProtocol(domain+ROBOTS_TXT));
             BufferedReader in = new BufferedReader(new InputStreamReader(robotURL.openStream()));
             String line = null;
             while((line = in.readLine()) != null) {
-                System.out.println(line);
             }
             //TODO, Parse the response and return list ot disallowed urls
             in.close();

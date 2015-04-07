@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by manish on 05/04/15.
@@ -57,14 +58,15 @@ public class VisitedUrlDaoJdbc extends JdbcDaoSupport implements VisitedUrlDao{
                 preparedStatement.setInt(2,uri.hashCode());
             }
         };
-        return getJdbcTemplate().query(SQL_SELECT,ps, new RowMapper<Integer>() {
+        List<Integer> list =  getJdbcTemplate().query(SQL_SELECT,ps, new RowMapper<Integer>() {
             Integer hash = null;
             @Override
             public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
                 hash = resultSet.getInt("DOMAIN");
                 return hash;
             }
-        }).get(0);
+        });
+        return !list.isEmpty()?list.get(0):null;
     }
 
     @Override

@@ -31,7 +31,9 @@ public class BootStrap {
         Object o = new Object();
 
         try {
-            o.wait();
+            synchronized (o) {
+                o.wait();
+            }
         } catch (InterruptedException e) {
             log.error("Interrupted. Attempting to exit");
             context.close();

@@ -12,7 +12,7 @@
 
     <context:component-scan base-package="com.manishk.webcrawler" />
 
-    <context:property-placeholder location="classpath:config.properties,classpath:seedurls-test.properties" />
+    <context:property-placeholder location="classpath:config.properties,classpath:seedurls.properties" />
 
     <jdbc:embedded-database id="dataSource">
         <jdbc:script location="classpath:schema.sql" />

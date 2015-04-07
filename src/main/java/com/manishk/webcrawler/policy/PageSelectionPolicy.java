@@ -41,7 +41,7 @@ public class PageSelectionPolicy implements WebCrawlerPolicy {
         /*
         Get robots.txt values for the domain. Stop crawling if url in it
          */
-        if(!checkRobotsDisallowed(domain,url)) {
+        if(checkRobotsDisallowed(domain,url)) {
             return false;
         }
 
@@ -55,7 +55,7 @@ public class PageSelectionPolicy implements WebCrawlerPolicy {
 
     private boolean checkRobotsDisallowed(String domain, String url){
         Map<String, List<String>> domainDisallowedUrlsMap = robotsTxtDao.select(domain);
-        if(domainDisallowedUrlsMap.isEmpty()){
+        if(domainDisallowedUrlsMap.get(domain).isEmpty()){
             //May be robots.txt was never checked. Get List of disallowed URLS and save in the table
             List<String> disallowed = robotsTxtFileReader.getDisAllowedPathsForURL(domain);
             if(disallowed.isEmpty())
@@ -63,7 +63,7 @@ public class PageSelectionPolicy implements WebCrawlerPolicy {
             robotsTxtDao.insert(domain,disallowed);
         }
         HashSet<String> disallowedUrls = new HashSet<String>(robotsTxtDao.select(domain).get(domain));
-        return disallowedUrls.contains(url);
+        return false;
     }
 
     private boolean visited(String domain, String url){
