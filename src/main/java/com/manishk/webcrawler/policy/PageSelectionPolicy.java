@@ -58,9 +58,9 @@ public class PageSelectionPolicy implements WebCrawlerPolicy {
         if(domainDisallowedUrlsMap.get(domain).isEmpty()){
             //May be robots.txt was never checked. Get List of disallowed URLS and save in the table
             List<String> disallowed = robotsTxtFileReader.getDisAllowedPathsForURL(domain);
-            if(disallowed.isEmpty())
-                disallowed.add("");
-            robotsTxtDao.insert(domain,disallowed);
+            if(!disallowed.isEmpty()) {
+                robotsTxtDao.insert(domain, disallowed);
+            }
         }
         HashSet<String> disallowedUrls = new HashSet<String>(robotsTxtDao.select(domain).get(domain));
         return false;
