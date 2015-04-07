@@ -16,7 +16,6 @@
 
     <jdbc:embedded-database id="dataSource">
         <jdbc:script location="classpath:schema.sql" />
-        <jdbc:script location="classpath:data.sql" />
     </jdbc:embedded-database>
 
 </beans>

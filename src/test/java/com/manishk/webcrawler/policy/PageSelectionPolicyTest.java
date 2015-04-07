@@ -6,6 +6,7 @@ import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -16,11 +17,11 @@ import java.io.IOException;
 public class PageSelectionPolicyTest {
 
     @Test
-    public void testDocumentFetch(){
+    public void testDocumentUnsupportedMimeType(){
+        Element docBody = null;
         try {
             Document document = Jsoup.connect("https://rtdmgb.files.wordpress.com/2015/02/ranveersingh-arjunkapoor-aib.jpg").get();
-            Element docBody = document.body();
-            System.out.println(docBody.text());
+             docBody = document.body();
             Elements links = docBody.select("a[href]");
             for(Element link : links){
                 Attributes attrs = link.attributes();
@@ -32,15 +33,18 @@ public class PageSelectionPolicyTest {
         } catch (IOException e) {
            e.printStackTrace();
         }
+        Assert.assertNull(docBody);
     }
 
     @Test
-    public void testDocumentMimeType(){
+    public void testDocumentFetch(){
+        Element docBody =null;
+        Elements links =null;
         try {
             Document document = Jsoup.connect("http://www.greatbong.net").get();
-            Element docBody = document.body();
+             docBody = document.body();
             System.out.println(docBody.text());
-            Elements links = docBody.select("a[href]");
+             links = docBody.select("a[href]");
             for(Element link : links){
                 Attributes attrs = link.attributes();
                 for(Attribute attr  :attrs) {
@@ -51,6 +55,8 @@ public class PageSelectionPolicyTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Assert.assertNotNull(docBody);
+        Assert.assertNotNull(links);
     }
     
 }

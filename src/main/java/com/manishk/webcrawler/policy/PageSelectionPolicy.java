@@ -3,6 +3,7 @@ package com.manishk.webcrawler.policy;
 import com.manishk.webcrawler.persistence.RobotsTxtDao;
 import com.manishk.webcrawler.persistence.VisitedUrlDao;
 import com.manishk.webcrawler.policy.robotstxt.RobotsTxtFileReader;
+import com.manishk.webcrawler.util.SelectionPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class PageSelectionPolicy implements WebCrawlerPolicy {
     public boolean allowedPerPolicy(String domain, String url) {
         /*
         Check if the domain has been visited already
-        If domain has been visited already, PageSelectionPolicy will not proceed because revisit requrests will be allowed
+        If domain has been visited already, PageSelectionPolicy will not proceed because revisit requests will be allowed
         from RevisitPolicy
          */
 
@@ -45,6 +46,11 @@ public class PageSelectionPolicy implements WebCrawlerPolicy {
         }
 
         return true;
+    }
+
+    @Override
+    public SelectionPolicy getSelectionPolicy() {
+        return SelectionPolicy.SELECTION;
     }
 
     private boolean checkRobotsDisallowed(String domain, String url){

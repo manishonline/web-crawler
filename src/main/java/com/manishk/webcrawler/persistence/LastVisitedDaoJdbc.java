@@ -2,6 +2,7 @@ package com.manishk.webcrawler.persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +28,8 @@ public class LastVisitedDaoJdbc extends JdbcDaoSupport implements LastVisitedDao
     private final String SQL_SELECT = "SELECT LASTVISITED FROM "+TABLE+" WHERE DOMAIN=?";
 
     private final String SQL_UPDATE = "UPDATE "+TABLE+" SET LASTVISITED=? WHERE DOMAIN=?";
+
+    private final String SQL_SELECT_REVISIT = "SELECT DOMAIN FROM "+TABLE+" WHERE LASTVISITED < ? ";
 
     @Autowired
     public LastVisitedDaoJdbc(DataSource dataSource){
@@ -72,5 +76,23 @@ public class LastVisitedDaoJdbc extends JdbcDaoSupport implements LastVisitedDao
             return dateList.get(0);
         else
             return null;
+    }
+
+    @Override
+    public List<String> select(final Date dateAfter) {
+        PreparedStatementSetter ps = new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setTimestamp(1,new Timestamp(dateAfter.getTime()));
+            }
+        };
+        final List<String> list = new ArrayList<String>();
+         getJdbcTemplate().query(SQL_SELECT_REVISIT,ps,new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+                list.add(resultSet.getString("DOMAIN"));
+            }
+        });
+        return list;
     }
 }

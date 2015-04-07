@@ -3,6 +3,7 @@ package com.manishk.webcrawler.policy;
 import com.manishk.webcrawler.persistence.LastVisitedDao;
 import com.manishk.webcrawler.persistence.RobotsTxtDao;
 import com.manishk.webcrawler.persistence.VisitedUrlDao;
+import com.manishk.webcrawler.util.SelectionPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,11 @@ public class RevisitPolicy implements WebCrawlerPolicy {
         }
 
         return true;
+    }
+
+    @Override
+    public SelectionPolicy getSelectionPolicy() {
+        return SelectionPolicy.REVISIT;
     }
 
     private boolean revisit(String domain, String url){
