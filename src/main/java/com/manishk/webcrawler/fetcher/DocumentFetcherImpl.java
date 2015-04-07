@@ -48,7 +48,7 @@ public class DocumentFetcherImpl implements DocumentFetcher {
             crawledDocument = new CrawledDocument(domain,resource,docBody.text(),childLinks);
             log.info("Crawl Finished, Domain=["+domain+"], Resource=["+resource+"], ChildLinks=["+childLinks.size()+"]");
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         return crawledDocument;
     }

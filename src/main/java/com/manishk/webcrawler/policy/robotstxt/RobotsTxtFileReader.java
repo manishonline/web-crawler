@@ -44,9 +44,7 @@ public class RobotsTxtFileReader {
             //TODO, Parse the response and return list ot disallowed urls
             in.close();
         } catch (MalformedURLException e) {
-            log.error("Error accessing URL "+domain,e);
         } catch (IOException e) {
-            log.error("Error reading from URL "+domain,e);
         }
         return disallowed;
     }

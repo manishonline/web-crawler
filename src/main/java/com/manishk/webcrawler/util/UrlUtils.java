@@ -29,7 +29,7 @@ public class UrlUtils {
             URL url1 = new URL(getURLWithProtocol(url));
             message = new CrawlerMessage(url1.getHost(),url1.getPath(),crawllevel==null?1:crawllevel+1);
         } catch (MalformedURLException e) {
-            log.error("Error parsing "+url,e);
+            //log.error("Error parsing "+url,e);
         }
         return message;
     }
