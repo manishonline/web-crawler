@@ -35,6 +35,7 @@ public class WebCrawlerWorker implements Runnable {
 
     private final DocumentIndexer documentIndexer;
 
+
     private boolean running;
 
     /**
@@ -54,6 +55,7 @@ public class WebCrawlerWorker implements Runnable {
         this.running = true;
         this.documentFetcher = documentFetcher;
         this.documentIndexer = documentIndexer;
+        ThreadLocal<String> local = new ThreadLocal<String>();
     }
     /**
      * When an object implementing interface <code>Runnable</code> is used
